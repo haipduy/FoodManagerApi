@@ -42,9 +42,7 @@ public class AccountController {
     ) {
         String username = account.get("username");
         String password = account.get("password");
-
-        AccountEntity accountEntity = ar.findAccountEntitiesByUserIdAndUserPasswordAndStatus(username,password,1);
-
+        AccountEntity accountEntity = ar.findAccountEntitiesByUserIdAndUserPasswordAndStatusAndRoleId(username,password,1,2);
         if (accountEntity != null) {
             return new ResponseEntity(accountEntity, HttpStatus.OK);
         }

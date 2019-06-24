@@ -47,7 +47,7 @@ public class OrderController {
     //get order by order ID
     @GetMapping("orders/{id}")
     public ResponseEntity getOrderById(
-            @PathVariable String orderId
+            @PathVariable("id") String orderId
     ) {
         OrderListEntity orderListEntity = orderRepository.findAllByOrderId(orderId);
         if (orderListEntity != null) {
@@ -59,7 +59,7 @@ public class OrderController {
     //get order by userID
     @GetMapping("accounts/{id}/orders")
     public ResponseEntity getOrderByCuID(
-            @PathVariable String cusId
+            @PathVariable("id") String cusId
     ) {
         List<OrderListEntity> listOrderListEntity = orderRepository.findAllByUserId(cusId);
         if (listOrderListEntity != null) {
@@ -128,12 +128,12 @@ public class OrderController {
     }
 
     private void createNewDetailOrder(int orderId, List<ItemModel> listProduct) {
-        DetailOrderEntity detailOrder = new DetailOrderEntity();
-        detailOrder.setOrderId(orderId);
+        DetailOrderEntity detailOrder;
         for (ItemModel item : listProduct) {
-            detailOrder.setProductId(item.getProductId());
-            detailOrder.setQuantity(item.getQuantity());
-            detailOrder.setPrice(item.getPrice());
+            String productId = item.getProductId();
+            int quantity = item.getQuantity();
+            float price = item.getPrice();
+            detailOrder = new DetailOrderEntity(orderId, productId,quantity,price);
             detailOrderRepository.save(detailOrder);
         }
 

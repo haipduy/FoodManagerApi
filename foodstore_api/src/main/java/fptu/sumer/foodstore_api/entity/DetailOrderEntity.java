@@ -5,17 +5,43 @@ import javax.persistence.*;
 @Entity
 @Table(name = "DetailOrder", schema = "dbo", catalog = "FoodSystem")
 public class DetailOrderEntity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "Id")
+    private int id;
+    @Basic
+    @Column(name = "OrderId")
     private int orderId;
+    @Basic
+    @Column(name = "ProductId")
     private String productId;
-    private  int quantity;
+    @Basic
+    @Column(name = "Quantity")
+    private int quantity;
+    @Basic
+    @Column(name = "Price")
     private float price;
 
 
     public DetailOrderEntity() {
     }
 
-    @Id
-    @Column(name = "OrderId", updatable = false)
+
+    public DetailOrderEntity(int orderId, String productId, int quantity, float price) {
+        this.orderId = orderId;
+        this.productId = productId;
+        this.quantity = quantity;
+        this.price = price;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public int getOrderId() {
         return orderId;
     }
@@ -24,8 +50,6 @@ public class DetailOrderEntity {
         this.orderId = orderId;
     }
 
-    @Basic
-    @Column(name = "ProductId")
     public String getProductId() {
         return productId;
     }
@@ -34,8 +58,6 @@ public class DetailOrderEntity {
         this.productId = productId;
     }
 
-    @Basic
-    @Column(name = "Quantity")
     public int getQuantity() {
         return quantity;
     }
@@ -44,8 +66,6 @@ public class DetailOrderEntity {
         this.quantity = quantity;
     }
 
-    @Basic
-    @Column(name = "Price")
     public float getPrice() {
         return price;
     }
@@ -53,6 +73,4 @@ public class DetailOrderEntity {
     public void setPrice(float price) {
         this.price = price;
     }
-
-
 }

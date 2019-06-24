@@ -14,7 +14,7 @@ public interface AccountRepository extends JpaRepository<AccountEntity,String> {
 
     // find Account by user code
     AccountEntity findAccountEntitiesByUserId(String userId);
-    AccountEntity findAccountEntitiesByUserIdAndUserPasswordAndStatus(String username,String password, int status);
+    AccountEntity findAccountEntitiesByUserIdAndUserPasswordAndStatusAndRoleId(String username,String password, int status,int role);
 
     // check account is exist
     boolean existsDistinctByUserId(String username);
