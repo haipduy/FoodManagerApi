@@ -61,7 +61,8 @@ public class OrderController {
     public ResponseEntity getOrderByCuID(
             @PathVariable("id") String cusId
     ) {
-        List<OrderListEntity> listOrderListEntity = orderRepository.findAllByUserId(cusId);
+        List<OrderListEntity> listOrderListEntity = orderRepository.findAllByUserIdOrderByOrderDateDesc(
+                cusId);
         if (listOrderListEntity != null) {
             return new ResponseEntity(listOrderListEntity, HttpStatus.OK);
         }
@@ -83,7 +84,7 @@ public class OrderController {
         if (bankAccount != null) {
             // chack tai khoan con tien hay k
             float sodu = bankAccount.getAccMoney();
-            bankAccount.setAccMoney(sodu - total);
+             bankAccount.setAccMoney(sodu - total);
             bankAccountRepository.saveAndFlush(bankAccount);
             int bankid = bankAccount.getBankId();
 

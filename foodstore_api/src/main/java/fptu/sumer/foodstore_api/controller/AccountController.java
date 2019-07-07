@@ -34,6 +34,15 @@ public class AccountController {
 
         return new ResponseEntity(HttpStatus.BAD_REQUEST);
     }
+    @GetMapping("accounts/{id}")
+    public ResponseEntity getCustomerByID(@PathVariable(value = "id") String id) {
+
+        AccountEntity accountEntity = ar.findAccountEntitiesByUserId(id);
+        if (accountEntity != null) {
+            return new ResponseEntity(accountEntity, HttpStatus.OK);
+        }
+        return new ResponseEntity(HttpStatus.BAD_REQUEST);
+    }
 
     @ApiOperation(value = "Check login by username and password")
     @PostMapping("account/login")

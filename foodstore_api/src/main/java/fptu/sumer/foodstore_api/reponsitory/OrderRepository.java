@@ -17,7 +17,7 @@ public interface OrderRepository extends JpaRepository<OrderListEntity, Integer>
 //
 //    OrderListEntity saveOrder(String username);
     // get all order by user id
-    List<OrderListEntity> findAllByUserId(String userId);
+    List<OrderListEntity> findAllByUserIdOrderByOrderDateDesc(String userId);
 
     // Save order
 

@@ -20,13 +20,13 @@ public class BankAccountController {
     @GetMapping("bankaccounts/{id}")
     public ResponseEntity getBankAccountByUserId(@PathVariable String id) {
 
-        BankAccountEntity  bankAccountEntity = bankAccountRepository.findByUserIdAndIsActive(id,1);
+        BankAccountEntity bankAccountEntity = bankAccountRepository.findByUserIdAndIsActive(id,1);
         if(bankAccountEntity!=null){
-
             return ResponseEntity.ok(bankAccountEntity);
         }
 
         return  new ResponseEntity(HttpStatus.BAD_REQUEST);
+
     }
 
     @ApiOperation(value = "Create new account")
