@@ -40,7 +40,7 @@ public class ProductController {
             for (ProductEntity product : listProduct) {
 
                 String proId = product.getProId();
-                String storeId= product.getStoreId();
+                String storeId = product.getStoreId();
 
                 StoreEntity store = storeRepository.findByStoreId(storeId);
 
@@ -54,7 +54,7 @@ public class ProductController {
                 int proStatus = product.getProStatus();
                 CategoryEntity category = categoryRepository.findByCategoryId(product.getCategoryId());
 
-                ProductResponseModel pro = new ProductResponseModel(proId, storeId , storeName, proName, proPrice, priceDiscount, proImage, proQuantity, proDescription, proStatus, category);
+                ProductResponseModel pro = new ProductResponseModel(proId, storeId, storeName, proName, proPrice, priceDiscount, proImage, proQuantity, proDescription, proStatus, category);
 
                 listReponse.add(pro);
 
@@ -66,11 +66,9 @@ public class ProductController {
     }
 
     @GetMapping("products/{id}")
-    public ResponseEntity getProductById(
-            @PathVariable String id
-    ) {
+    public ResponseEntity getProductById(@PathVariable(value = "id") String id) {
         ProductEntity productEntity = productRepository.findByProId(id);
-        if(productEntity!=null){
+        if (productEntity != null) {
             return new ResponseEntity(productEntity, HttpStatus.OK);
         }
         return new ResponseEntity(HttpStatus.BAD_REQUEST);

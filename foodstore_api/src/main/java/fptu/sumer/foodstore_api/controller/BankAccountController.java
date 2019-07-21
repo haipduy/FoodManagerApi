@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 @RestController
 @RequestMapping("/api/v1/")
 @Api(value = "Bank Account Management System")
@@ -20,21 +22,48 @@ public class BankAccountController {
     @GetMapping("bankaccounts/{id}")
     public ResponseEntity getBankAccountByUserId(@PathVariable String id) {
 
-        BankAccountEntity bankAccountEntity = bankAccountRepository.findByUserIdAndIsActive(id,1);
-        if(bankAccountEntity!=null){
+        BankAccountEntity bankAccountEntity = bankAccountRepository.findByUserIdAndIsActive(id, 1);
+        if (bankAccountEntity != null) {
             return ResponseEntity.ok(bankAccountEntity);
         }
 
-        return  new ResponseEntity(HttpStatus.BAD_REQUEST);
+        return new ResponseEntity(HttpStatus.BAD_REQUEST);
 
     }
 
     @ApiOperation(value = "Create new account")
     @PostMapping("bankaccounts")
-    public ResponseEntity createNewAccount(@RequestBody BankAccountEntity bankAccountEntity){
+    public ResponseEntity createNewAccount(@RequestBody BankAccountEntity bankAccountEntity) {
+
+        BankAccountEntity bankAccount = bankAccountRepository.findByBankIdAndIsActive(bankAccountEntity.getBankId(), 1);
+
+        if(bankAccount!=null){
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+        }
 
         bankAccountRepository.save(bankAccountEntity);
 
         return ResponseEntity.ok(bankAccountEntity);
+
+    }
+
+    @ApiOperation(value = "Update money")
+    @PutMapping("bankaccounts/{id}")
+    public ResponseEntity updateMoneyBankById(
+            @PathVariable(value = "id") int id,
+            @RequestBody Map<String, String> bankaccount
+    ) {
+        BankAccountEntity bankAccountEntity = bankAccountRepository.findByBankIdAndIsActive(id, 1);
+
+        if (bankAccountEntity != null) {
+            float moneyOfBank = bankAccountEntity.getAccMoney();
+            float money = Float.parseFloat(bankaccount.get("money"));
+            float total = moneyOfBank + money;
+            bankAccountEntity.setAccMoney(total);
+            bankAccountRepository.save(bankAccountEntity);
+            return new ResponseEntity(bankAccountEntity, HttpStatus.OK);
+        }
+
+        return new ResponseEntity(HttpStatus.BAD_REQUEST);
     }
 }

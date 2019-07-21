@@ -74,8 +74,6 @@ public class AccountController {
         account.setRoleId(2);
 
         ar.save(account);
-
-//        return new ResponseEntity(HttpStatus.OK);
         return ResponseEntity.ok(account);
     }
 

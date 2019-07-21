@@ -9,4 +9,7 @@ public interface BankAccountRepository extends JpaRepository<BankAccountEntity, 
 
     BankAccountEntity findByUserIdAndIsActive(String userId, int isActive);
 
+    BankAccountEntity findByBankIdAndIsActive(int bankId, int isActive);
+
+
 }
